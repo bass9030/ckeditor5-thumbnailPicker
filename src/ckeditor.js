@@ -26,6 +26,7 @@ import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin'
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
@@ -41,7 +42,7 @@ class Thumbnail extends Plugin {
             const button = new ButtonView();
 
             button.set( {
-                label: 'Thumbnail',
+                label: 'Set as thumbnail',
                 withText: true
             } );
             
@@ -62,6 +63,8 @@ class Thumbnail extends Plugin {
                 editor.model.change(writer => {
                     writer.setAttribute('thumbnail', true, imageElement)
                 })
+
+                editor.getThumbnail = () => imageElement._attrs.get('src');
             } );
 
             return button;
@@ -82,6 +85,7 @@ Editor.builtinPlugins = [
 	Code,
 	CodeBlock,
 	Essentials,
+    SimpleUploadAdapter,
 	Heading,
 	Image,
 	ImageCaption,
